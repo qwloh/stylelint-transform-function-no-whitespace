@@ -1,0 +1,25 @@
+{
+  "name": "stylelint-transform-function-no-whitespace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "",
+  "bugs": {
+    "url": "",
+    "email": "loh.qwen@gmail.com"
+  },
+  "repository": "qwloh/stylelint-transform-function-no-whitespace.git",
+  "keywords": [
+    "stylelint",
+    "stylelint-plugin",
+    "css",
+    "csslint",
+    "lint",
+    "linter"
+  ],
+  "author": "Loh Qiao Wen <loh.qwen@gmail.com>",
+  "license": "ISC"
+}
