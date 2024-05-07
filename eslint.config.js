@@ -27,6 +27,7 @@ export default [
       ],
       "@stylistic/semi": ["error", "always"],
       "@stylistic/comma-dangle": ["error", "always-multiline"],
+      "@stylistic/dot-location": ["error", "property"],
       // spacing
       "@stylistic/object-curly-spacing": ["error", "always"],
       // line breaks
@@ -37,6 +38,7 @@ export default [
         { allowAllPropertiesOnSameLine: true },
       ],
       "@stylistic/function-call-argument-newline": ["error", "consistent"],
+      "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
       "@stylistic/multiline-ternary": ["error", "always-multiline"],
       // line padding
       "@stylistic/padding-line-between-statements": [

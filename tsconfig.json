@@ -4,10 +4,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    // "module": "ESNext", // or "NodeNext"
-    // "moduleResolution": "Bundler",
-    // "target": "ESNext",
     // "outDir": "./dist",
+    // "module": "ESNext", // or "NodeNext"
+    "target": "ESNext",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
