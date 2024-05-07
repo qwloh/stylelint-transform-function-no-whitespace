@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    // "module": "ESNext", // or "NodeNext"
+    // "moduleResolution": "Bundler",
+    // "target": "ESNext",
+    // "outDir": "./dist",
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "files": [
+    "index.ts",
+    "__tests__/index.test.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
