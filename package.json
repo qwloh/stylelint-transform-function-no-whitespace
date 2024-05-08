@@ -11,14 +11,13 @@
     "linter"
   ],
   "author": "Loh Qiao Wen <loh.qwen@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "repository": "qwloh/stylelint-transform-function-no-whitespace",
   "type": "module",
   "exports": "./dist/index.js",
   "scripts": {
     "build": "swc index.ts -d dist",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "lint": "eslint index.ts --debug"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "peerDependencies": {
     "stylelint": "^16.0.0"
