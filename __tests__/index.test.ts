@@ -7,13 +7,7 @@ const config: Config = {
   rules: { "plugin/transform-function-no-whitespace": true },
 };
 
-import pluginInTS, { TRANSFORM_FUNCTIONS, printRejectedMsg } from "../index.ts";
-
-if (!("rule" in pluginInTS)) throw Error("");
-
-const {
-  rule: { messages },
-} = pluginInTS;
+import { TRANSFORM_FUNCTIONS, printRejectedMsg } from "../index.ts";
 
 
 it("Should not raise warning on valid values", async () => {
@@ -22,8 +16,7 @@ it("Should not raise warning on valid values", async () => {
     results: [{ warnings }],
   } = await lint({ files: "./__tests__/validtransform.css", config }); // cwd of lint when running test is project's root dir
 
-  expect(warnings)
-    .toHaveLength(0);
+  expect(warnings).toHaveLength(0);
 
 });
 
@@ -43,10 +36,7 @@ describe("Warn when single transform function", () => {
 
       expect(warnings).not.toHaveLength(0);
 
-      // @ts-ignore
-      const warning = messages.rejected(
-        printRejectedMsg([{ match: `${fn} `, col: fn.length }]),
-      );
+      const warning = printRejectedMsg([{ match: `${fn} `, col: fn.length }]);
       expect(warnings[0].text).toBe(warning);
 
     },
@@ -65,10 +55,8 @@ describe("Warn when multiple transform functions are used, and one is not follow
       config,
     });
     expect(warnings).not.toHaveLength(0);
-    // @ts-ignore
-    const warning = messages.rejected(
-      printRejectedMsg([{ match: "scaleX ", col: 6 }]),
-    );
+
+    const warning = printRejectedMsg([{ match: "scaleX ", col: 6 }]);
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -81,10 +69,8 @@ describe("Warn when multiple transform functions are used, and one is not follow
       config,
     });
     expect(warnings).not.toHaveLength(0);
-    // @ts-ignore
-    const warning = messages.rejected(
-      printRejectedMsg([{ match: "translate ", col: 24 }]),
-    );
+
+    const warning = printRejectedMsg([{ match: "translate ", col: 24 }]);
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -97,10 +83,8 @@ describe("Warn when multiple transform functions are used, and one is not follow
       config,
     });
     expect(warnings).not.toHaveLength(0);
-    // @ts-ignore
-    const warning = messages.rejected(
-      printRejectedMsg([{ match: "rotate ", col: 34 }]),
-    );
+
+    const warning = printRejectedMsg([{ match: "rotate ", col: 34 }]);
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -118,13 +102,11 @@ describe("Warn when", () => {
       config,
     });
     expect(warnings).not.toHaveLength(0);
-    // @ts-ignore
-    const warning = messages.rejected(
-      printRejectedMsg([
-        { match: "scaleX ", col: 6 },
-        { match: "rotate ", col: 22 },
-      ]),
-    );
+
+    const warning = printRejectedMsg([
+      { match: "scaleX ", col: 6 },
+      { match: "rotate ", col: 22 },
+    ]);
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -138,13 +120,11 @@ describe("Warn when", () => {
       config,
     });
     expect(warnings).not.toHaveLength(0);
-    // @ts-ignore
-    const warning = messages.rejected(
-      printRejectedMsg([
-        { match: "scale3d ", col: 7 },
-        { match: "scale3d ", col: 45 },
-      ]),
-    );
+
+    const warning = printRejectedMsg([
+      { match: "scale3d ", col: 7 },
+      { match: "scale3d ", col: 45 },
+    ]);
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -158,14 +138,12 @@ describe("Warn when", () => {
       config,
     });
     expect(warnings).not.toHaveLength(0);
-    // @ts-ignore
-    const warning = messages.rejected(
-      printRejectedMsg([
-        { match: "scale3d ", col: 7 },
-        { match: "scale3d ", col: 46 },
-        { match: "rotate ", col: 30 },
-      ]),
-    );
+
+    const warning = printRejectedMsg([
+      { match: "scale3d ", col: 7 },
+      { match: "scale3d ", col: 46 },
+      { match: "rotate ", col: 30 },
+    ]);
     expect(warnings[0].text).toBe(warning);
 
   });
