@@ -7,7 +7,42 @@ const config: Config = {
   rules: { "plugin/transform-function-no-whitespace": true },
 };
 
-import { TRANSFORM_FUNCTIONS, printRejectedMsg } from "../index.ts";
+import pluginInTS, { TRANSFORM_FUNCTIONS, printRejectedMsg } from "../index.ts";
+
+if (!("rule" in pluginInTS)) throw Error("Plugin does not have a member named 'rule'. Check that it is correctly imported in index.test.ts");
+
+const {
+  rule: { messages },
+} = pluginInTS;
+
+describe("Util `printRejectedMsg`", () => {
+
+  it("should output warning with the correct transform function and col number", () => {
+
+    const match = "skewX";
+    const col = 30;
+    expect(printRejectedMsg([{ match, col }]))
+      .toBe(`Expected ${match}to be followed immediately by '(' (col ${col} at 'transform')\n`);
+
+  });
+
+  it("should sort transform functions based on col number", () => {
+
+    const matched = [
+      { match: "scale3d ", col: 7 },
+      { match: "scale3d ", col: 46 },
+      { match: "rotate ", col: 30 },
+    ];
+    const message = printRejectedMsg([...matched]); // use spread operator to prevent mutation of test stub
+    expect(message, `Error! "${message}" is not sorted`).toBe(
+      `Expected ${matched[0].match}to be followed immediately by '(' (col ${matched[0].col} at 'transform')\n`+
+      `Expected ${matched[2].match}to be followed immediately by '(' (col ${matched[2].col} at 'transform')\n` +
+      `Expected ${matched[1].match}to be followed immediately by '(' (col ${matched[1].col} at 'transform')\n`,
+    );
+
+  });
+
+});
 
 
 it("Should not raise warning on valid values", async () => {
@@ -16,7 +51,8 @@ it("Should not raise warning on valid values", async () => {
     results: [{ warnings }],
   } = await lint({ files: "./__tests__/validtransform.css", config }); // cwd of lint when running test is project's root dir
 
-  expect(warnings).toHaveLength(0);
+  expect(warnings)
+    .toHaveLength(0);
 
 });
 
@@ -35,8 +71,10 @@ describe("Warn when single transform function", () => {
       });
 
       expect(warnings).not.toHaveLength(0);
-
-      const warning = printRejectedMsg([{ match: `${fn} `, col: fn.length }]);
+      // @ts-ignore
+      const warning = messages.rejected(
+        printRejectedMsg([{ match: `${fn} `, col: fn.length }]),
+      );
       expect(warnings[0].text).toBe(warning);
 
     },
@@ -55,8 +93,10 @@ describe("Warn when multiple transform functions are used, and one is not follow
       config,
     });
     expect(warnings).not.toHaveLength(0);
-
-    const warning = printRejectedMsg([{ match: "scaleX ", col: 6 }]);
+    // @ts-ignore
+    const warning = messages.rejected(
+      printRejectedMsg([{ match: "scaleX ", col: 6 }]),
+    );
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -69,8 +109,10 @@ describe("Warn when multiple transform functions are used, and one is not follow
       config,
     });
     expect(warnings).not.toHaveLength(0);
-
-    const warning = printRejectedMsg([{ match: "translate ", col: 24 }]);
+    // @ts-ignore
+    const warning = messages.rejected(
+      printRejectedMsg([{ match: "translate ", col: 24 }]),
+    );
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -83,8 +125,10 @@ describe("Warn when multiple transform functions are used, and one is not follow
       config,
     });
     expect(warnings).not.toHaveLength(0);
-
-    const warning = printRejectedMsg([{ match: "rotate ", col: 34 }]);
+    // @ts-ignore
+    const warning = messages.rejected(
+      printRejectedMsg([{ match: "rotate ", col: 34 }]),
+    );
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -102,11 +146,13 @@ describe("Warn when", () => {
       config,
     });
     expect(warnings).not.toHaveLength(0);
-
-    const warning = printRejectedMsg([
-      { match: "scaleX ", col: 6 },
-      { match: "rotate ", col: 22 },
-    ]);
+    // @ts-ignore
+    const warning = messages.rejected(
+      printRejectedMsg([
+        { match: "scaleX ", col: 6 },
+        { match: "rotate ", col: 22 },
+      ]),
+    );
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -120,11 +166,13 @@ describe("Warn when", () => {
       config,
     });
     expect(warnings).not.toHaveLength(0);
-
-    const warning = printRejectedMsg([
-      { match: "scale3d ", col: 7 },
-      { match: "scale3d ", col: 45 },
-    ]);
+    // @ts-ignore
+    const warning = messages.rejected(
+      printRejectedMsg([
+        { match: "scale3d ", col: 7 },
+        { match: "scale3d ", col: 45 },
+      ]),
+    );
     expect(warnings[0].text).toBe(warning);
 
   });
@@ -138,12 +186,14 @@ describe("Warn when", () => {
       config,
     });
     expect(warnings).not.toHaveLength(0);
-
-    const warning = printRejectedMsg([
-      { match: "scale3d ", col: 7 },
-      { match: "scale3d ", col: 46 },
-      { match: "rotate ", col: 30 },
-    ]);
+    // @ts-ignore
+    const warning = messages.rejected(
+      printRejectedMsg([
+        { match: "scale3d ", col: 7 },
+        { match: "scale3d ", col: 46 },
+        { match: "rotate ", col: 30 },
+      ]),
+    );
     expect(warnings[0].text).toBe(warning);
 
   });

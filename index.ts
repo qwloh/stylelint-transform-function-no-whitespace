@@ -75,7 +75,9 @@ const ruleFunction: Rule<boolean> = (primary, secondaryOptions, context) => {
       report({
         result,
         ruleName,
-        message: printRejectedMsg(matches.map((m) => ({ match: m[0], col: m.index + m[0].length - 1 }))),
+        message: messages.rejected(
+          printRejectedMsg(matches.map((m) => ({ match: m[0], col: m.index + m[0].length - 1 }))),
+        ),
         node: decl,
       });
 

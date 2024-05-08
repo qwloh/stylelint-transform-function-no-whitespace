@@ -13,7 +13,8 @@
   },
   "files": [
     "index.ts",
-    "__tests__/index.test.ts"
+    "__tests__/index.test.ts",
+    "node_modules/jest-expect-message/types/index.d.ts"
   ],
   "exclude": [
     "node_modules"

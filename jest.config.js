@@ -7,4 +7,5 @@ export default {
     // '^.+\\.m?[tj]sx?$' to process js/ts/mjs/mts with `ts-jest`
     "^.+\\.tsx?$": "@swc/jest",
   },
+  setupFilesAfterEnv: ["jest-expect-message"],
 };
