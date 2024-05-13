@@ -16,16 +16,15 @@ For projects that would like to safeguard their transform functions when used wi
 
 When there are whitespaces between tranform functions and their parentheses, browsers deemed them as invalid values for the CSS `transform` property.
 
-![Invalid CSS](/asset/invalid_css.png)
-<div align="center">
 <img src="asset/invalid_css.png" width="500">
-</div>
 
 Yet, two most common CSS formatters, VS Code's built-in CSS Language Features and Prettier, do not warn users when whitespaces are accidentally left in, nor remove them on format.
 
-|**VS Code's built-in CSS Language Features** | **Prettier** |
-|---|---|
-|![CSS Language Feature Format Behavior](/asset/css-format-behavior.gif) | ![Prettier Format Behavior](/asset/prettier-format-behavior.gif)|
+|VS Code's built-in CSS Language Features |
+|---|
+|![CSS Language Feature Format Behavior](/asset/css-format-behavior.gif) |
+|**Prettier**|
+|![Prettier Format Behavior](/asset/prettier-format-behavior.gif)|
 
 Stylelint, on the other hand, can be configured to address this issue by turning on its `declaration-property-value-no-unknown` rule. However, this is
 
