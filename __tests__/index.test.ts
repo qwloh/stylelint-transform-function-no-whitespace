@@ -22,7 +22,7 @@ describe("Util `printRejectedMsg`", () => {
     const match = "skewX";
     const col = 30;
     expect(printRejectedMsg([{ match, col }]))
-      .toBe(`Expected ${match}to be followed immediately by '(' (col ${col} at 'transform')\n`);
+      .toBe(`Expected ${match}to be followed immediately by '(' <col ${col} at 'transform'>`);
 
   });
 
@@ -35,9 +35,9 @@ describe("Util `printRejectedMsg`", () => {
     ];
     const message = printRejectedMsg([...matched]); // use spread operator to prevent mutation of test stub
     expect(message, `Error! "${message}" is not sorted`).toBe(
-      `Expected ${matched[0].match}to be followed immediately by '(' (col ${matched[0].col} at 'transform')\n`+
-      `Expected ${matched[2].match}to be followed immediately by '(' (col ${matched[2].col} at 'transform')\n` +
-      `Expected ${matched[1].match}to be followed immediately by '(' (col ${matched[1].col} at 'transform')\n`,
+      `Expected ${matched[0].match}to be followed immediately by '(' <col ${matched[0].col} at 'transform'>\n` +
+      `Expected ${matched[2].match}to be followed immediately by '(' <col ${matched[2].col} at 'transform'>\n` +
+      `Expected ${matched[1].match}to be followed immediately by '(' <col ${matched[1].col} at 'transform'>`,
     );
 
   });

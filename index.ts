@@ -36,9 +36,8 @@ const ruleName = "plugin/transform-function-no-whitespace";
 
 export const printRejectedMsg = (matches: { match: string; col: number }[]): string => matches
   .sort((ma, mb) => ma.col - mb.col)
-  .map((m) => `Expected ${m.match}to be followed immediately by '(' (col ${m.col} at 'transform')`)
-  .join("\n")
-  .concat("\n");
+  .map((m) => `Expected ${m.match}to be followed immediately by '(' <col ${m.col} at 'transform'>`)
+  .join("\n");
 
 const messages = ruleMessages(ruleName, {
   rejected: (rejectedMsg: string) => rejectedMsg,
