@@ -38,3 +38,23 @@
   transform: revert-layer;
   transform: unset;
 }
+
+/* Usage with Variables */
+
+.bar{
+  /* Native CSS variables */
+  transform: rotate(var(--rotate-deg));
+  transform: rotate(var(--rotate-deg)) translateX(var(--translate-dist)) scale(var(--scale-x), var(--scale-y));
+  
+  /* Dollar variables */
+  transform: rotate($rotate-deg);
+  transform: rotate($rotate-deg) translateX($translate-dist) scale($scale-x, $scale-y);
+  
+  /* Dollar variables with brackets */
+  transform: rotate($(rotate-deg)rad);
+  transform: rotate($(rotate-deg)rad) translateY($(translate-dist)px) scale($(scale-x)%, $(scale-y)%);
+  
+  /* Hash variables with curly brackets */
+  transform: rotate(#{rotate-deg});
+  transform: rotate(#{rotate-deg}) translateY(#{translate-dist}) scale(#{scale-x}, #{scale-y});
+}
