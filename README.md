@@ -45,16 +45,20 @@ npm install --save-dev stylelint stylelint-transform-function-no-whitespace
 ```
 
 ## Footnotes
-  
+
 1. <span id="rule-limit">Limitations</span> of Stylelint's `declaration-property-value-no-unknown` [↩](#see-behavior)
 
-  |Native CSS variables|
-  |---|
-  |![Stylelint Rule with CSS Variables](/asset/stylelint-css-var.gif)|
-  |**SCSS variables**|
-  |![Stylelint Rule with SCSS Variables](/asset/stylelint-scss-var.gif)|
-  |**PostCSS variables**|
-  |![Stylelint Rule with PostCSS Variables](/asset/stylelint-postcss-var.gif)|
+    - Native CSS Variables: Dangling transform functions that the rule would catch otherwise are ignored
+
+        ![Stylelint Rule with CSS Variables](/asset/stylelint-css-var.gif)
+
+    - SCSS Variables: Dollar variables interefere with parsing
+
+        ![Stylelint Rule with SCSS Variables](/asset/stylelint-scss-var.gif)
+
+    - PostCSS Variables: Dollar variables interefere with parsing
+
+        ![Stylelint Rule with PostCSS Variables](/asset/stylelint-postcss-var.gif)
 
 ## LICENSE
 
