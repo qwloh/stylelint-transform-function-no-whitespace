@@ -5,7 +5,7 @@
     "strict": true,
     "skipLibCheck": true,
     // "outDir": "./dist",
-    // "module": "ESNext", // or "NodeNext"
+    // "module": "ESNext", // or "NodeNext", if wish to enable top-level await
     "target": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
@@ -13,8 +13,8 @@
   },
   "files": [
     "index.ts",
-    "__tests__/index.test.ts",
-    "node_modules/jest-expect-message/types/index.d.ts"
+    "__tests__/index-15.test.ts",
+    "__tests__/index-16.test.ts",
   ],
   "exclude": [
     "node_modules"

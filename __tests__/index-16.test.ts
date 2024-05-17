@@ -1,9 +1,11 @@
-import stylelint from "stylelint";
-import { Config } from "stylelint";
+import { describe, it, expect } from "vitest";
+
+import stylelint from "stylelint16";
+import { Config } from "stylelint16";
 const { lint } = stylelint;
 
 const config: Config = {
-  plugins: ["./dist/index.js"],
+  plugins: ["./dist/index.mjs"],
   rules: { "plugin/transform-function-no-whitespace": true },
 };
 
