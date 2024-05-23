@@ -42,13 +42,13 @@ This stylelint plugin provides a simple rule to detect unwanted whitespace betwe
 
 ![My Plugin](/readme_assets/demo/my-plugin.gif)
 
-In the clip above, it is demonstrated with dollar variables in a PostCSS file. But since the rule is agnostic towards the content passed as the transform function's arguments, it also :-
+In the clip above, it is demonstrated with dollar variables in a PostCSS file. But since the rule is agnostic towards the content passed as arguments to the transform functions, it also:
 
 * [works with CSS Variables ↗](/readme_assets/demo/no-whitespace-css-var.gif)
 * [works with SCSS dollar variables ↗](/readme_assets/demo/no-whitespace-scss-var.gif)
 * [works with Multiple transform functions ↗](/readme_assets/demo/multiple_transform_fn.png)
 
-The rule does *not* support [Autofix](#autofix).
+This rule does *not* support [Autofix](#autofix).
 
 ## Installation
 
@@ -99,7 +99,7 @@ If you come from Prettier and are considering switching to Stylelint due to Pret
     }
     ```
 
-    :bulb: It's always a good idea to **restart VS Code** after adding new configs to ensure that the latest settings are loaded.
+:bulb: It's always a good idea to **restart VS Code** after adding new configs to ensure that the latest settings are loaded.
 
 ## Usage
 
@@ -129,7 +129,6 @@ The following patterns are considered problems:
   /*                                                ↑ whitespace */
   transform: rotateX(#{$rotate-x}) skew (30deg, #{$skew-y}) translateY (3in);
   /*                                   ↑ whitespace                   ↑ whitespace */
-
 }
 ```
 
