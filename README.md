@@ -121,8 +121,8 @@ The following patterns are considered problems:
   /*                                 ↑ whitespace */
   
   /* With variables */
-  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) translateY (var(--translate-y)) scale(2, 0.5);
-  /*                                                                            ↑ whitespace */
+  transform: matrix (var(--scale-x),2,3,4,5,6) rotate(0.5turn) skewY(1.07rad);
+  /*               ↑ whitespace */
   transform: rotateZ ($rotate-Z) scaleY(0.5) translateZ ($translate-Z);
   /*                ↑ whitespace                       ↑ whitespace    */
   transform: perspective(17px) rotateX(10deg) scaleZ ($(scale-z));
