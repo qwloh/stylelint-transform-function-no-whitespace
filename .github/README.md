@@ -12,6 +12,7 @@ For projects that would like to safeguard their transform functions when used wi
 
 <!-- badges -->
 ![Build](https://img.shields.io/github/actions/workflow/status/qwloh/stylelint-transform-function-no-whitespace/npm-publish.yml)
+![Stylelint Version](https://img.shields.io/npm/dependency-version/stylelint-transform-function-no-whitespace/peer/stylelint)
 ![NPM Version](https://img.shields.io/npm/v/stylelint-transform-function-no-whitespace)
 ![Unpacked Size](https://img.shields.io/npm/unpacked-size/stylelint-transform-function-no-whitespace)
 ![Last Commit](https://img.shields.io/github/last-commit/qwloh/stylelint-transform-function-no-whitespace)
@@ -64,12 +65,32 @@ npm i -D stylelint stylelint-transform-function-no-whitespace
 
 In `stylelint.config.js`, add the plugin and turn on its rule.
 
+For Stylelint `^16.0.0`:
+
 ```js
 // stylelint.config.js
 /* ESM pattern is preferred, as CommonJS support will be deprecated
 in Stylelint's next major release (17.0.0) */
 
 export default {
+  plugins: [
+    // your other plugins
+    "stylelint-transform-function-no-whitespace",
+  ],
+  rules: {
+    // your other rules
+    "plugin/transform-function-no-whitespace": true,
+  },
+};
+```
+
+For Stylelint `^15.0.0`:
+
+```js
+// stylelint.config.js
+/* CommonJS pattern, Do not use unless you must use Stylelint 15 */
+
+module.exports = {
   plugins: [
     // your other plugins
     "stylelint-transform-function-no-whitespace",
@@ -113,7 +134,7 @@ After updating `stylelint.config.js`, **restart VS Code**. You should now see wa
 
 #### `true`
 
-Turn on the rule. (use `null` to turn the rule off, per [Stylelint's convention](https://stylelint.io/user-guide/configure#rules))
+Turn on the rule. (use `null` to turn off the rule, per [Stylelint's convention](https://stylelint.io/user-guide/configure#rules))
 
 The following patterns are considered problems:
 

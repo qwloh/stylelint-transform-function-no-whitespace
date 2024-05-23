@@ -4,6 +4,8 @@ All Stylelint's rules are turned off by default. To get started quickly, extend 
 
 Here are the presets that are recommended for **minimal intrusion** on an existing project:
 
+> The configs are written for Stylelint 16. If you must use Stylelint 15, see [Pt. 2 of Discussion (Opt.)](#discussion-pt-2).
+
 **If you use CSS or PostCSS**,
 
 Install the following presets:
@@ -94,10 +96,12 @@ You may now move on with the rest of the setup. Below is an optional discussion 
 
     };
 
-    // CommonJS pattern (Do not use)
+    // CommonJS pattern (Do not use, unless you have to use Stylelint@^15)
     module.exports = {
     
     };
     ```
+
+    <span id="discussion-pt-2">However, if you must use Stylelint 15, setup the config in CommonJS pattern (`module.exports`).</span>
 
 3. Although Stylelint still accepts config written in JSON or YML format (`.stylelintrc.json`, `.stylelintrc.yml`, or `.stylelintrc.yaml`), [ESLint has deprecated support for `.eslintrc`](https://eslint.org/docs/latest/use/configure/configuration-files). The community seems to be converging towards `*.config.js` as the future standard.
