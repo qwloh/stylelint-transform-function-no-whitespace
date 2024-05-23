@@ -1,6 +1,8 @@
+# Recommended Stylelint Starting Config
+
 All Stylelint's rules are turned off by default. To get started quickly, extend presets that turn on a predefined set of rules for you.
 
-Here are the presets that are recommended for minimal intrusion on an existing project:
+Here are the presets that are recommended for **minimal intrusion** on an existing project:
 
 **If you use CSS or PostCSS**,
 
@@ -48,6 +50,8 @@ export default {
 
 You may now move on with the rest of the setup. Below is an optional discussion for those who are interested in knowing a bit more about why these configs are recommended.
 
+***
+
 ### Discusssion (Opt.)
 
 1. There are several flavors of presets out there. But here's a quick summary on how they relate to each other:
@@ -80,7 +84,7 @@ You may now move on with the rest of the setup. Below is an optional discussion 
 
     **Note on Prettier**
 
-    There is technically a [`stylelint-prettier`](https://github.com/prettier/stylelint-prettier#readme) plugin that runs Prettier as a Stylelint rule. However, assuming Prettier's limited configuration choice is what drives your switch to Stylelint in the first place, here `@stylistic/stylelint-config` is recommended over `stylelint-prettier`. This is because [the rules in `@stylistic/stylelint-config`](https://github.com/stylelint-stylistic/stylelint-stylistic/blob/main/docs/user-guide/rules.md#general--sheet) address all that is configurable via Prettier -- indentation, print width, etc., while providing more CSS-specific formatting options.
+    There is technically a [`stylelint-prettier`](https://github.com/prettier/stylelint-prettier#readme) plugin that runs Prettier as a Stylelint rule. However, assuming Prettier's limited configuration choice is what drives your switch to Stylelint in the first place, here `@stylistic/stylelint-config` is recommended over `stylelint-prettier`. This is because [the rules in `@stylistic/stylelint-config`](https://github.com/stylelint-stylistic/stylelint-stylistic/blob/main/docs/user-guide/rules.md#general--sheet) address most that is configurable via Prettier -- indentation, print width, etc., while providing more CSS-specific formatting options.
 
 2. For `stylelint.config.js`, it is recommended to use ESM pattern over CommonJS pattern, as it is announced that Stylelint's next major release (17.0.0) will drop support for CommonJS API.
 
