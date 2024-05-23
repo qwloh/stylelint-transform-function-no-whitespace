@@ -16,7 +16,10 @@
   ],
   "author": "Loh Qiao Wen <loh.qwen@gmail.com>",
   "license": "MIT",
-  "repository": "qwloh/stylelint-transform-function-no-whitespace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qwloh/stylelint-transform-function-no-whitespace.git"
+  },
   "type": "module",
   "files": [
     "./dist/index.mjs",
@@ -43,6 +46,7 @@
     "@typescript-eslint/parser": "^7.8.0",
     "eslint": "^8.57.0",
     "eslint-plugin-markdown": "^5.0.0",
+    "stylelint": "^16.5.0",
     "stylelint15": "npm:stylelint@^15.11.0",
     "stylelint16": "npm:stylelint@^16.5.0",
     "typescript": "^5.4.5",

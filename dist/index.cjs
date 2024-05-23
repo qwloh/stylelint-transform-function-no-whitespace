@@ -19,13 +19,13 @@ _export(exports, {
         return printRejectedMsg;
     }
 });
-const _stylelint16 = _interop_require_default(require("stylelint16"));
+const _stylelint = _interop_require_default(require("stylelint"));
 function _interop_require_default(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
 }
-const { createPlugin, utils: { report, ruleMessages, validateOptions } } = _stylelint16.default;
+const { createPlugin, utils: { report, ruleMessages, validateOptions } } = _stylelint.default;
 const TRANSFORM_FUNCTIONS = {
     matrix: /matrix\s/g,
     matrix3d: /matrix3d\s/g,

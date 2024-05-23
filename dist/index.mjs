@@ -1,4 +1,4 @@
-import stylelint from "stylelint16";
+import stylelint from "stylelint";
 const { createPlugin, utils: { report, ruleMessages, validateOptions } } = stylelint;
 export const TRANSFORM_FUNCTIONS = {
     matrix: /matrix\s/g,

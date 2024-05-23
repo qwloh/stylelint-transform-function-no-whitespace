@@ -1,4 +1,4 @@
-import stylelint, { Rule } from "stylelint16";
+import stylelint, { Rule } from "stylelint";
 
 const {
   createPlugin,
