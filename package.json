@@ -16,10 +16,7 @@
   ],
   "author": "Loh Qiao Wen <loh.qwen@gmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/qwloh/stylelint-transform-function-no-whitespace.git"
-  },
+  "repository": "qwloh/stylelint-transform-function-no-whitespace",
   "type": "module",
   "files": [
     "./dist/index.mjs",

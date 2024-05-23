@@ -8,15 +8,19 @@ For projects that would like to safeguard their transform functions when used wi
 
 </div>
 
-<!-- to be added after the package is published -->
-<!-- npm tag -->
-<!-- coverage badge -->
+***
+
+<!-- badges -->
+![Build](https://img.shields.io/github/actions/workflow/status/qwloh/stylelint-transform-function-no-whitespace/npm-publish.yml)
+![NPM Version](https://img.shields.io/npm/v/stylelint-transform-function-no-whitespace)
+![Unpacked Size](https://img.shields.io/npm/unpacked-size/stylelint-transform-function-no-whitespace)
+![Last Commit](https://img.shields.io/github/last-commit/qwloh/stylelint-transform-function-no-whitespace)
 
 ## Problem
 
 When there are whitespaces between tranform functions and their parentheses, browsers deemed them as invalid values for the CSS `transform` property.
 
-<img src="/readme_assets/problem/invalid_css.png" width="500">
+<img src="../readme_assets/problem/invalid_css.png" width="500">
 
 Yet, two most common CSS formatters, VS Code's built-in CSS Language Features and Prettier, do not warn users when whitespaces are accidentally left in, nor remove them on format.
 

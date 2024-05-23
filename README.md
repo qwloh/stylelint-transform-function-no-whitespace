@@ -4,7 +4,7 @@ Disallow whitespace between transform functions and their parentheses
 
 For projects that would like to safeguard their transform functions when used with CSS, SCSS, or PostCSS variables.
 
-![My plugin](readme_assets/demo/my-plugin.gif)
+![My plugin](/readme_assets/demo/my-plugin.gif)
 
 ## Installation
 
@@ -21,7 +21,7 @@ in Stylelint's next major release (17.0.0) */
 
 export default {
   plugins: [
-    // your other pluginsv
+    // your other plugins
     "stylelint-transform-function-no-whitespace",
   ],
   rules: {
@@ -34,3 +34,8 @@ export default {
 ## Documentation
 
 Please refer to [GitHub README](https://github.com/qwloh/stylelint-transform-function-no-whitespace#readme) for full documentation.
+
+![Build](https://img.shields.io/github/actions/workflow/status/qwloh/stylelint-transform-function-no-whitespace/npm-publish.yml)
+![NPM Version](https://img.shields.io/npm/v/stylelint-transform-function-no-whitespace)
+![Unpacked Size](https://img.shields.io/npm/unpacked-size/stylelint-transform-function-no-whitespace)
+![Last Commit](https://img.shields.io/github/last-commit/qwloh/stylelint-transform-function-no-whitespace)
