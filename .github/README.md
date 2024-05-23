@@ -16,7 +16,7 @@ For projects that would like to safeguard their transform functions when used wi
 
 When there are whitespaces between tranform functions and their parentheses, browsers deemed them as invalid values for the CSS `transform` property.
 
-<img src="readme_assets/problem/invalid_css.png" width="500">
+<img src="/readme_assets/problem/invalid_css.png" width="500">
 
 Yet, two most common CSS formatters, VS Code's built-in CSS Language Features and Prettier, do not warn users when whitespaces are accidentally left in, nor remove them on format.
 
@@ -32,7 +32,7 @@ A partial solution to this issue is Stylelint's `declaration-property-value-no-u
 
 However, this rule is only applicable to plain CSS project. According to [the rule's documentation](https://stylelint.io/user-guide/rules/declaration-property-value-no-unknown/), we "should not turn it on for CSS-like languages, such as Sass or Less, as they have their own syntaxes."
 
-Indeed, the rule [cannot parse dollar variables used in SCSS](/readme_assets/docs/footnotes.md) (which has a closer form to CSS than Sass or Less) or in [PostCSS files](//readme_assets/docs/footnotes.md). In fact, even in standard CSS projects, it stops catching standalone transform functions when [native CSS variables](/readme_assets/docs/footnotes.md) are involved.
+Indeed, the rule [cannot parse dollar variables used in SCSS](/readme_assets/docs/footnotes.md) (which has a closer form to CSS than Sass or Less) or in [PostCSS files](/readme_assets/docs/footnotes.md). In fact, even in standard CSS projects, it stops catching standalone transform functions when [native CSS variables](/readme_assets/docs/footnotes.md) are involved.
 
 One could try to make the rule work with these variables by messing with its configuration, that is, by providing a regex to `ignoreProperties.transform` in the rule's secondary option to describe a new acceptable property value pattern for `transform` that accounts for the use of variables. But constructing such regex is not trivial, as `transform` takes value in a wide range of forms, ranging from non-functional keywords, like `none` and `initial`, to more than a dozen transform functions that take varying number of arguments (consider `matrix3d()`, specified with 16 values, and `translateX()`, which accepts only one), and the combination of any number of these functions.
 
