@@ -55,6 +55,6 @@
   transform: rotate($(rotate-deg)rad) translateY($(translate-dist)px) scale($(scale-x)%, $(scale-y)%);
   
   /* Hash variables with curly brackets */
-  transform: rotate(#{rotate-deg});
-  transform: rotate(#{rotate-deg}) translateY(#{translate-dist}) scale(#{scale-x}, #{scale-y});
+  transform: rotate(#{$rotate-deg});
+  transform: rotate(#{$rotate-deg}rad) translateY(#{$translate-dist}px) scale(#{$scale-x}%, #{$scale-y}%);
 }

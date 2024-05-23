@@ -109,7 +109,95 @@ After updating `stylelint.config.js`, **restart VS Code**. You should now see wa
 
 #### `true`
 
-Turn on the rule. (use `null` to turn the rule off, per Stylelint's convention)
+Turn on the rule. (use `null` to turn the rule off, per [Stylelint's convention](https://stylelint.io/user-guide/configure#rules))
+
+The following patterns are considered problems:
+
+```css
+.foo { 
+  transform: scale ();
+  /*              ↑ whitespace */
+  transform: scaleX(1.2rem) translate (30px, 0) rotate(30deg);
+  /*                                 ↑ whitespace */
+  
+  /* With variables */
+  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) translateY (var(--translate-y)) scale(2, 0.5);
+  /*                                                                            ↑ whitespace */
+  transform: rotateZ ($rotate-Z) scaleY(0.5) translateZ ($translate-Z);
+  /*                ↑ whitespace                       ↑ whitespace    */
+  transform: perspective(17px) rotateX(10deg) scaleZ ($(scale-z));
+  /*                                                ↑ whitespace */
+  transform: rotateX(#{$rotate-x}) skew (30deg, #{$skew-y}) translateY (3in);
+  /*                                   ↑ whitespace                   ↑ whitespace */
+
+}
+```
+
+The following patterns are *not* considered problems:
+
+```css
+/* Taken from: https://developer.mozilla.org/en-US/docs/Web/CSS/transform */
+
+.foo {
+  /* Keyword values */
+  transform: none;
+
+  /* Function values */
+  transform: matrix(1, 2, 3, 4, 5, 6);
+  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  transform: perspective(17px);
+  transform: rotate(0.5turn);
+  transform: rotate3d(1, 2, 3, 10deg);
+  transform: rotateX(10deg);
+  transform: rotateY(10deg);
+  transform: rotateZ(10deg);
+  transform: translate(12px, 50%);
+  transform: translate3d(12px, 50%, 3em);
+  transform: translateX(2em);
+  transform: translateY(3in);
+  transform: translateZ(2px);
+  transform: scale(2, 0.5);
+  transform: scale3d(2.5, 1.2, 0.3);
+  transform: scaleX(2);
+  transform: scaleY(0.5);
+  transform: scaleZ(0.3);
+  transform: skew(30deg, 20deg);
+  transform: skewX(30deg);
+  transform: skewY(1.07rad);
+
+  /* Multiple function values */
+  transform: translateX(10px) rotate(10deg) translateY(5px);
+  transform: perspective(500px) translate(10px, 0, 20px) rotateY(3deg);
+
+  /* Global values */
+  transform: inherit;
+  transform: initial;
+  transform: revert;
+  transform: revert-layer;
+  transform: unset;
+}
+```
+
+```css
+/* Usage with Variables */
+
+.bar{
+  /* Native CSS variables */
+  transform: rotate(var(--rotate-deg));
+  transform: rotate(var(--rotate-deg)) translateX(var(--translate-dist)) scale(var(--scale-x), var(--scale-y));
+  
+  /* Dollar variables */
+  transform: rotate($rotate-deg);
+  transform: rotate($rotate-deg) translateX($translate-dist) scale($scale-x, $scale-y);
+  
+  /* Dollar variables with brackets */
+  transform: rotate($(rotate-deg)rad);
+  transform: rotate($(rotate-deg)rad) translateY($(translate-dist)px) scale($(scale-x)%, $(scale-y)%);
+  
+  /* Hash variables with curly brackets */
+  transform: rotate(#{$rotate-deg});
+  transform: rotate(#{$rotate-deg}rad) translateY(#{$translate-dist}px) scale(#{$scale-x}%, #{$scale-y}%);
+```
 
 ### Optional Secondary Options
 

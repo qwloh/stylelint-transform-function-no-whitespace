@@ -409,52 +409,52 @@ describe("Warn when $()-variables-using transform function", () => {
 });
 
 // hash variables with curly brackets
-describe("Warn when #{}-variables-using transform function", () => {
+describe("Warn when #{$}-variables-using transform function", () => {
 
   it.each([
     // space in transform function that uses variables
     {
       desc: "is the first and dangling",
-      testStr: "matrix (#{scale-x},2,3,4,5,6) rotate(0.5turn) skewY(1.07rad)",
+      testStr: "matrix (#{$scale-x},2,3,4,5,6) rotate(0.5turn) skewY(1.07rad)",
       matches: [{ match: "matrix", col: 6 }],
     },
     {
       desc: "is in the middle and dangling",
-      testStr: "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) translateY (#{translate-y}) scale(2, 0.5)",
+      testStr: "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) translateY (#{$translate-y}) scale(2, 0.5)",
       matches: [{ match: "translateY", col: 67 }],
     },
     {
       desc: "is the last and dangling",
-      testStr: "perspective(17px) rotateX(10deg) scaleZ (#{scale-z})",
+      testStr: "perspective(17px) rotateX(10deg) scaleZ (#{$scale-z})",
       matches: [{ match: "scaleZ", col: 39 }],
     },
     // space in transform function that doesn't use variables but others do
     {
       desc: "is the first and fine but one other is dangling",
-      testStr: "rotate3d(1, 2, 3, #{rotate3d-angle}) translate (12px, 50%) skew(30deg, 20deg)",
-      matches: [{ match: "translate", col: 46 }],
+      testStr: "rotate3d(1, 2, 3, #{$rotate3d-angle}) translate (12px, 50%) skew(30deg, 20deg)",
+      matches: [{ match: "translate", col: 47 }],
     },
     {
       desc: "is in the middle and fine but one other is dangling",
-      testStr: "translateX (2em) scale3d(2.5, #{scale-y}, 0.3) skewX(30deg)",
+      testStr: "translateX (2em) scale3d(2.5, #{$scale-y}, 0.3) skewX(30deg)",
       matches: [{ match: "translateX", col: 10 }],
     },
     {
       desc: "is the last and fine but one other is dangling",
-      testStr: "translate3d(12px, 50%, 3em) rotateY (10deg) scaleX(#{scale-x})",
+      testStr: "translate3d(12px, 50%, 3em) rotateY (10deg) scaleX(#{$scale-x})",
       matches: [{ match: "rotateY", col: 35 }],
     },
     // multiple dangling variable-using transform functions
     {
       desc: "(s) are dangling",
-      testStr: "rotateZ (#{rotate-Z}) scaleY(0.5) translateZ (#{translate-Z})",
-      matches: [{ match: "rotateZ", col: 7 }, { match: "translateZ", col: 44 }],
+      testStr: "rotateZ (#{$rotate-Z}) scaleY(0.5) translateZ (#{$translate-Z})",
+      matches: [{ match: "rotateZ", col: 7 }, { match: "translateZ", col: 45 }],
     },
     // there are both variableless and variable-using dangling transform functions
     {
       desc: "as well as another variableless one are dangling",
-      testStr: "rotateX(#{rotate-x}) skew (30deg, #{skew-y}) translateY (3in)",
-      matches: [{ match: "skew", col: 25 }, { match: "translateY", col: 55 }],
+      testStr: "rotateX(#{$rotate-x}) skew (30deg, #{$skew-y}) translateY (3in)",
+      matches: [{ match: "skew", col: 26 }, { match: "translateY", col: 57 }],
     },
   ])("$desc", async ({ testStr, matches }) => {
 
