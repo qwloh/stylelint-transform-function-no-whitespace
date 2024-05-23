@@ -28,20 +28,32 @@ Yet, two most common CSS formatters, VS Code's built-in CSS Language Features an
 
 ### Existing Stylelint Rule
 
-Stylelint, on the other hand, can be configured to address this issue by turning on the rule `declaration-property-value-no-unknown`. But this rule is rather strict and forbidding, so it may not suit all projects (probably also why it is turned off by default). Especially if it is used solely for this purpose of catching whitespaces in transform functions; the configuration work needed to relax the rule where needed can become more than what the benefit is worth.
+A partial solution to this issue is Stylelint's `declaration-property-value-no-unknown` rule. It enforces strict validation of CSS property values, and as part of its validation flags standalone transform functions that are not followed immediately by brackets as invalid.
 
-But more importantly, **the rule breaks when variables come into play** <sup id="see-behavior">[1, see behavior](#rule-limit)</sup>, whether it's native CSS variables or non-standard syntaxes like the dollar or hash variables commonly used by CSS pre- or post-processors like SCSS or PostCSS. This is particularly limiting as it is common to use variables when coding animations that is moderately complex, say, the staggered entrance of group elements, in which variables are used to control the delay between each element's entry.
+However, this rule is only applicable to plain CSS project. According to [the docs](https://stylelint.io/user-guide/rules/declaration-property-value-no-unknown/), we "should not turn it on for CSS-like languages, such as Sass or Less, as they have their own syntaxes."
 
-It is posssible to make the rule work with these variables by messing with its configuration, that is, by providing a regex to `ignoreProperties.transform` in the rule's secondary option, to describe a new acceptable property value pattern for `transform` that accounts for the use of variables. But constructing such regex is not trivial, as `transform` takes value in a wide range of forms, ranging from non-functional keywords, like `none` and `initial`, to more than a dozen transform functions, which take varying number of arguments (consider `matrix3d()`, specified with 16 values, and `translateX()`, which accepts only one), and the combination of any number of these functions.
+Indeed, the rule [cannot parse dollar variables used in SCSS](/asset/stylelint-scss-var.gif) (which has a closer form to CSS than Sass or Less) or in [PostCSS files](/asset/stylelint-postcss-var.gif). In fact, even in standard CSS projects, it stops catching standalone transform functions when [native CSS variables](/asset/stylelint-css-var.gif) are involved.
+
+One could try to make the rule work with these variables by messing with its configuration, that is, by providing a regex to `ignoreProperties.transform` in the rule's secondary option to describe a new acceptable property value pattern for `transform` that accounts for the use of variables. But constructing such regex is not trivial, as `transform` takes value in a wide range of forms, ranging from non-functional keywords, like `none` and `initial`, to more than a dozen transform functions that take varying number of arguments (consider `matrix3d()`, specified with 16 values, and `translateX()`, which accepts only one), and the combination of any number of these functions.
 
 ## Solution
 
-[to be filled in]
+This stylelint plugin provides a simple rule to detect unwanted whitespace between a transform function and its parentheses.
+
+![My Plugin](/asset/my-plugin-2.gif)
+
+In the clip above, it is demonstrated with dollar variables in a PostCSS file. But since the rule is agnostic towards the content passed as the transform function's arguments, it also :-
+
+* [works with CSS Variables ↗](/asset/no-whitespace-css-var.gif)
+* [works with SCSS dollar variables ↗](/asset/no-whitespace-scss-var.gif)
+* [works with Multiple transform functions ↗](/asset/multiple_transform_fn.png)
+
+The rule does *not* support [Autofix](#autofix).
 
 ## Installation
 
 ```shell
-npm install --save-dev stylelint stylelint-transform-function-no-whitespace
+npm i -D stylelint stylelint-transform-function-no-whitespace
 ```
 
 ## Setup
@@ -51,7 +63,7 @@ In `stylelint.config.js`, add the plugin and turn on its rule.
 ```js
 // stylelint.config.js
 /* ESM pattern is preferred, as CommonJS support will be deprecated
-on Stylelint's next major release (17.0.0) */
+in Stylelint's next major release (17.0.0) */
 
 export default {
   plugins: [
@@ -72,7 +84,7 @@ export default {
 If you come from Prettier and are considering switching to Stylelint due to Prettier's limited configuration options, you first need to setup Stylelint on your project in order to use this plugin. You'll need four things, assuming you are using VS Code as your IDE:
 
 1. `stylelint` installed as `devDependencies` on your project.
-2. A `stylelint.config.js` in your project's root directory. I recommend starting with this config.
+2. A `stylelint.config.js` in your project's root directory. I recommend starting with [this config](https://github.com/qwloh/stylelint-transform-function-no-whitespace/blob/main/asset/recommended-config.md).
 3. Install Stylelint's [official extension](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) in VS Code.
 4. In VS Code's user or workspace settings, configure (a) the files Stylelint should validate, by providing the file extensions, and (b) VS Code to run Stylelint with `--fix` flag on save to get Prettier-like format-on-save behavior.
 
@@ -99,26 +111,16 @@ After updating `stylelint.config.js`, **restart VS Code**. You should now see wa
 
 ### Options
 
-This plugin accepts a single boolean as its primary option  (`true` or `false`, which turns the rule on or off). There is no secondary configuration option.
+#### `true`
+
+Turn on the rule. (use `null` to turn the rule off, per Stylelint's convention)
+
+### Optional Secondary Options
+
+This plugin does not have any secondary option.
 
 ### Autofix
 
-When a rule supports autofix, Stylelint can apply fixes to the source code automatically when it is violated, i.e. performing what we called "formatting". When a rule doesn't, the editor raise errors as squiggly lines under the code, but no formatting will occur, and the user must resolve the error manually.
+When a rule supports autofix, Stylelint can apply fixes to the source code automatically when it is violated, i.e. performing what we loosely perceived as "formatting". When a rule doesn't, the editor raises errors as squiggly lines under the code, but no formatting will occur, and the user must resolve the error manually.
 
-**This plugin does NOT support autofix**. If you need the plugin to not only raise errors, but also remove the whitespaces for you when you run your linting/formatting command, let me know by opening an issue.
-
-## Footnotes
-
-1. <small><span id="rule-limit">Limitations</span> of Stylelint's `declaration-property-value-no-unknown` [↩](#see-behavior)</small>
-
-    |<small>**SCSS Variables**</small>|
-    |:---|
-    |![Stylelint Rule with SCSS Variables](/asset/stylelint-scss-var.gif)|
-    |<small>**PostCSS Variables**</small>|
-    |![Stylelint Rule with PostCSS Variables](/asset/stylelint-postcss-var.gif)|
-    |<small>**Native CSS Variables**: Dangling transform functions that the rule would otherwise catch are ignored</small>|
-    |![Stylelint Rule with CSS Variables](/asset/stylelint-css-var.gif)|
-
-## LICENSE
-
-[MIT](https://github.com/qwloh/stylelint-transform-function-no-whitespace/blob/main/LICENSE)
+**This plugin does NOT support autofix**; it only highlights the presence of extra whitespaces. If you need the plugin to not only raise errors, but also remove the whitespaces for you when you run your linting/formatting command, let me know by opening an issue.

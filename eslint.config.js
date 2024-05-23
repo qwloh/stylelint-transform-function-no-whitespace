@@ -1,9 +1,19 @@
+import markdown from "eslint-plugin-markdown";
 import tsParser from "@typescript-eslint/parser";
 import stylistic from "@stylistic/eslint-plugin";
 
 export default [
   {
     ignores: ["dist/*"],
+  },
+  {
+    plugins: {
+      markdown,
+    },
+  },
+  {
+    files: ["*.md", "**/*.md"],
+    processor: "markdown/markdown", // only lint js/jsx/ts/tsx code within md, not md itself
   },
   {
     files: ["*.ts", "**/*.ts"],
