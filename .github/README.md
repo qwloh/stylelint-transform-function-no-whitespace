@@ -31,23 +31,27 @@ Yet, two most common CSS formatters, VS Code's built-in CSS Language Features an
 |**Prettier**|
 |![Prettier Format Behavior](/readme_assets/problem/prettier-format-behavior.gif)|
 
+For those who work with `transform` a lot, this lack of warning can result in time lost to misled debugging efforts, which is especially true when `transform` is also used with more complex construct, such as variables or functions.
+
 ### Existing Stylelint Rule
 
 A partial solution to this issue is Stylelint's `declaration-property-value-no-unknown` rule. It enforces strict validation of CSS property values, and as part of its validation flags standalone transform functions that are not followed immediately by brackets as invalid.
 
-However, this rule is only applicable to plain CSS project. According to [the rule's documentation](https://stylelint.io/user-guide/rules/declaration-property-value-no-unknown/), we "should not turn it on for CSS-like languages, such as Sass or Less, as they have their own syntaxes."
-
+However, as with all Stylelint's official rules, this rule targets only plain CSS project. According to [the rule's documentation](https://stylelint.io/user-guide/rules/declaration-property-value-no-unknown/), we "should not turn it on for CSS-like languages, such as Sass or Less, as they have their own syntaxes."
 Indeed, the rule [cannot parse dollar variables used in SCSS](/readme_assets/docs/footnotes.md) (which has a closer form to CSS than Sass or Less) or in [PostCSS files](/readme_assets/docs/footnotes.md). In fact, even in standard CSS projects, it stops catching standalone transform functions when [native CSS variables](/readme_assets/docs/footnotes.md) are involved.
 
-One could try to make the rule work with these variables by messing with its configuration, that is, by providing a regex to `ignoreProperties.transform` in the rule's secondary option to describe a new acceptable property value pattern for `transform` that accounts for the use of variables. But constructing such regex is not trivial, as `transform` takes value in a wide range of forms, ranging from non-functional keywords, like `none` and `initial`, to more than a dozen transform functions that take varying number of arguments (consider `matrix3d()`, specified with 16 values, and `translateX()`, which accepts only one), and the combination of any number of these functions.
+This is particularly limiting as it is common to use variables or functions with `transform` when coding animation that is moderately complex.
+
+Even when `transform` is used with only literal values, the rule may still not be desirable as it turns on validation for *all* CSS properties. Being a sledgehammer approach to the problem, as long as the project uses non-standard syntax in any other property-value pair, the rule will require custom regexes to be provided for these places in order to be properly relaxed to fit the project. If it is turned on solely for this purpose of catching whitespaces, the configuration work introduced may not worth the benefit reaped.
 
 ## Solution
 
-This stylelint plugin provides a simple rule to detect unwanted whitespace between a transform function and its parentheses.
+This stylelint plugin provides a simple rule that detects unwanted whitespace between a transform function and its parentheses.
 
 ![My Plugin](/readme_assets/demo/my-plugin.gif)
+*Demonstrated with dollar variables in a PostCSS file*
 
-In the clip above, it is demonstrated with dollar variables in a PostCSS file. But since the rule is agnostic towards the content passed as arguments to the transform functions, it also:
+Since the rule is agnostic towards the content passed as arguments to the transform functions, it also:
 
 * [works with CSS Variables ↗](/readme_assets/demo/no-whitespace-css-var.gif)
 * [works with SCSS dollar variables ↗](/readme_assets/demo/no-whitespace-scss-var.gif)
@@ -130,9 +134,13 @@ If you come from Prettier and are considering switching to Stylelint due to Pret
 
 After updating `stylelint.config.js`, **restart VS Code**. You should now see warning lines under your code if you add spaces after your transform functions.
 
-### Options
+This plugin provides a single rule:
 
-#### `true`
+### `plugin/transform-function-no-whitespace`
+
+#### Options
+
+##### `true`
 
 Turn on the rule. (use `null` to turn off the rule, per [Stylelint's convention](https://stylelint.io/user-guide/configure#rules))
 
@@ -221,14 +229,15 @@ The following patterns are *not* considered problems:
   /* Hash variables with curly brackets */
   transform: rotate(#{$rotate-deg});
   transform: rotate(#{$rotate-deg}rad) translateY(#{$translate-dist}px) scale(#{$scale-x}%, #{$scale-y}%);
+}
 ```
 
-### Optional Secondary Options
+#### Optional Secondary Options
 
-This plugin does not have any secondary option.
+This rule does not take any secondary options.
 
-### Autofix
+#### Autofix
 
 When a rule supports autofix, Stylelint can apply fixes to the source code automatically when it is violated, i.e. performing what we loosely perceived as "formatting". When a rule doesn't, the editor raises errors as squiggly lines under the code, but no formatting will occur, and the user must resolve the error manually.
 
-**This plugin does NOT support autofix**; it only highlights the presence of extra whitespaces. If you need the plugin to not only raise errors, but also remove the whitespaces for you when you run your linting/formatting command, let me know by opening an issue.
+**This rule does *not* support autofix**; it only highlights the presence of extra whitespaces. If you need it to not only raise errors, but also remove the whitespaces for you when you run your linting/formatting command, let me know by opening an issue.
